@@ -84,6 +84,15 @@ Once the project is installed and set up, you can use it as follows:
 
     Open [http://localhost:3000](http://localhost:3000/) in your browser to see the results.
 
+You'll be able to add new images to Supabase and your local version will automatically pickup the new records. However, once deployed, any new records added will not be shown. This is because it is using `getStaticProps`. In order to re-index the page once a new record has been added, you'll need to use Supabase database webhooks. Config like so:
+
+1. Go to Database in Supabase
+2. Select Webhooks - Create New Webhook
+3. Setup a new HTTP Request webhook based on all changes to the Supabase table that was created above. As a HTTP Parameter, create one called `secret`. Generate an API key or add a password of your choice. The URL for the webhook should be `[Domain]/api/revalidate`. Checkout the `api/revalidate.ts` to see what it does.
+4. In your hosting platform, in this case, I use Vercel, add an environment variable called `REVALIDATE_SECRET` and add the same API key value.
+
+Supabase will trigger a website to this API everytime a change is made and the page will re-index and show your changes.
+
 ## Contributing
 
 To contribute to the project, please follow these guidelines:
