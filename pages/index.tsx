@@ -66,8 +66,8 @@ function BlurImage({ image }: { image: Image }) {
         />
       </div>
       <h3 className="mt-4 text-lg font-medium text-gray-900">{image.comic}</h3>
-      <p className="mt-1 text-sm text-gray-900">Ep {image.episode} By {image.recommendBy}</p>
-
+      <p className="mt-1 text-sm text-gray-900">Episode <span className="font-medium">{image.episode}</span></p>
+      <p className="mt-1 text-sm text-gray-900">Recommended By <span className="font-medium">{image.recommendBy}</span></p>
     </a>
   )
 }
