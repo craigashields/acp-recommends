@@ -2,6 +2,8 @@ import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import LayoutWrapper from '@/components/Layout'
+import { Analytics } from '@vercel/analytics/react';
+
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -13,6 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <LayoutWrapper>
       <Component {...pageProps} />
     </LayoutWrapper>
+    <Analytics />
     </>
     )
 }
