@@ -3,9 +3,11 @@ import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import LayoutWrapper from '@/components/Layout'
 import { Analytics } from '@vercel/analytics/react';
-
+import { logSiteDetails } from '@/lib/log-message';
+import siteMetadata from '@/data/siteMetadata';
 
 function MyApp({ Component, pageProps }: AppProps) {
+  logSiteDetails(siteMetadata.logPortflio);
   return (
   <>
     <Head>

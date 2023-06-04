@@ -1,23 +1,7 @@
-const siteMetadata: {
-    title: string;
-    author: string;
-    headerTitle: string;
-    description: string;
-    language: string;
-    theme: 'system' | 'dark' | 'light';
-    siteUrl: string;
-    siteRepo: string;
-    siteLogo: string;
-    socialBanner: string;
-    email: string;
-    github: string;
-    facebook: string;
-    applepodcast: string;
-    podbean: string;
-    spotify: string;
-    locale: string;
-    contentDir: string;
-  } = {
+import { SiteMetadata } from "../interfaces";
+
+const siteMetadata: SiteMetadata 
+   = {
     title: 'Awesome Comics Podcast Recommendations',
     author: 'Craig Shields',
     headerTitle: 'Recommendations',
@@ -35,7 +19,20 @@ const siteMetadata: {
     podbean: 'https://awesomecomics.podbean.com/',
     spotify: 'https://open.spotify.com/show/6kemZFyM1aD7ih3MRri5Q1',
     locale: 'en-GB',
-    contentDir: '/data/content'
+    contentDir: '/data/content',
+    logPortflio: {
+        logContent: {
+          intro: "🤖 Hi, I'm Craig, thanks for visiting the ACP Recommendations! Check out the pod at any of the below",
+          podbean_log: "🎙️ Podbean - https://awesomecomics.podbean.com/",
+          spotify_log: "📻 Spotify - https://open.spotify.com/show/6kemZFyM1aD7ih3MRri5Q1",
+          apple_log: "🍏 Apple Podcasts - https://tinyurl.com/4a3btc4f"
+        },
+        logInfo: {
+          group: true,
+          styles: "font-size: 1.25em; font-weight: bold; padding: 5px;"
+        }
+
+    }
   };
   
   export default siteMetadata;

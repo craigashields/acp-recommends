@@ -1,15 +1,48 @@
+
+<div align="center">
+
 ![acp-banner](/public/static/images/logo_banner.jpeg)
+  <h1>Awesome Comics Podcast Recommendations</h1>
+  
+  <p>
+    An awesome image gallery of the comics recommended by the Awesome Comics Podcast team  
+  </p>
 
-# Awesome Comics Podcast Recommendations
-
-An awesome image gallery of the comics recommended by the Awesome Comics Podcast team
-
-
-![acp-screenshot](/public/static/images/acp-recommends-demo.jpg)
+<!-- Badges -->
+<p>
+<a href="https://github.com/craigashields/acp-recommends/graphs/contributors">
+    <img src="https://img.shields.io/github/contributors/craigashields/acp-recommends" alt="contributors" />
+</a>
+<a href="">
+    <img src="https://img.shields.io/github/last-commit/craigashields/acp-recommends" alt="last update" />
+</a>
+<a href="https://github.com/craigashields/acp-recommends/network/members">
+    <img src="https://img.shields.io/github/forks/craigashields/acp-recommends" alt="forks" />
+</a>
+<a href="https://github.com/craigashields/acp-recommends/stargazers">
+    <img src="https://img.shields.io/github/stars/craigashields/acp-recommends" alt="stars" />
+</a>
+<a href="https://github.com/craigashields/acp-recommends/issues/">
+    <img src="https://img.shields.io/github/issues/craigashields/acp-recommends" alt="open issues" />
+</a>
+</p>  
+<h4>
+    <a href="https://github.com/craigashields/acp-recommends/">View Demo</a>
+  <span> · </span>
+    <a href="https://github.com/craigashields/acp-recommends">Documentation</a>
+  <span> · </span>
+    <a href="https://github.com/craigashields/acp-recommends/issues/">Report Bug</a>
+  <span> · </span>
+    <a href="https://github.com/craigashields/acp-recommends/issues/">Request Feature</a>
+  </h4>
+</div>
 
 
 ## Table of Contents
 
+- [About ACP Recommends](#about-acp-recommends)
+  * [Screenshots](#screenshots)
+  * [Tech Stack](#tech-stack)
 - [Description](#description)
 - [Features](#features)
 - [Installation](#installation)
@@ -18,7 +51,7 @@ An awesome image gallery of the comics recommended by the Awesome Comics Podcast
 - [License](#license)
 - [Acknowledgements](#acknowledgements)
 
-## Motivation
+## About ACP Recommends
 
 Welcome to my corner of the internet! I'm Craig, a passionate comic book fan and the creator of this website dedicated to the Awesome Comics Podcast Recommends.As an ardent lover of comics, I wanted to contribute to the vibrant ACP community. That's why I decided to establish this website, where I can share my enthusiasm for the Awesome Comics Podcast.
 
@@ -27,6 +60,18 @@ It's important to note that this website is purely a fan endeavor, and there is 
 So, join me on this exciting journey, where we celebrate the captivating narratives, vibrant artwork, and extraordinary creators that make the world of comics so fantastic. Remember, it's all about staying awesome!
 
 I hope you all find this helpful.
+
+### Screenshots 
+
+![acp-screenshot](/public/static/images/acp-recommends-demo.jpg)
+
+### Tech Stack
+
+- [Supabase](https://supabase.com)
+- [Tailwind CSS](https://tailwindcss.com)
+- [Next.js](https://nextjs.org)
+- [Vercel](https://vercel.com)
+
 
 ## Installation
 
@@ -113,10 +158,3 @@ I'd like to thank the following
 
 - [timlrx](https://github.com/timlrx) from the awesome tailwind starter blog, from which I learnt alot
 - [leerob](https://github.com/leerob) for the inspiring to do this after watching his [YouTube](https://www.youtube.com/watch?v=BSoRXk1FIw8&t=684s) video from which this repo was originally cloned. 
-
-## Built Using
-
-- [Supabase](https://supabase.com)
-- [Tailwind CSS](https://tailwindcss.com)
-- [Next.js](https://nextjs.org)
-- [Vercel](https://vercel.com)
