@@ -31,8 +31,21 @@ const siteMetadata: SiteMetadata
           group: true,
           styles: "font-size: 1.25em; font-weight: bold; padding: 5px;"
         }
+      },
+    seasonalText: {
+      halloween: {
+        notFoundHeader: "Sorry, you've taken a wrong turn and ended up in Hell!",
+        notFoundMessage: "Our ghostly ghouls couldn't find the page you were looking for. Don't be scared; you can always use the navigation cauldron to find your way back to the land of the living.",
+        notFoundButtonText: "Escape the Abyss"
+    },
+    normal: {
+      notFoundHeader: "Sorry I have no idea what that is.",
+      notFoundMessage: "Why not go back to our homepage for awesome comic recommends.",
+      notFoundButtonText: "Back to Awesomeness"
+  },
 
-    }
+}
+
   };
   
   export default siteMetadata;

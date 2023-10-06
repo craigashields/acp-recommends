@@ -27,6 +27,15 @@ export type LogInfo = {
     styles: string;          
 }
 
+export type Season = {    
+    notFoundHeader: string,
+    notFoundMessage: string,
+    notFoundButtonText: string
+}
+
+export type SeasonalInfo = { [key:string]: Season;}
+        
+
 export type SiteMetadata = {
     title: string;
     author: string;
@@ -47,4 +56,5 @@ export type SiteMetadata = {
     locale: string;
     contentDir: string;
     logPortflio: LogPortflio;
+    seasonalText: SeasonalInfo
 }

@@ -92,7 +92,7 @@ export default function Gallery({ images }: { images: Image[] }) {
         ))}
       </div>
       ) : (
-        <p>Sorry no awesomeness found.</p>
+        <p className="text-primary-700">Sorry no awesomeness found.</p>
       )}
     </div>
     </>
@@ -118,9 +118,9 @@ function BlurImage({ image }: { image: Image }) {
           onLoadingComplete={() => setLoading(false)}
         />
       </div>
-      <h3 className="mt-4 text-lg font-medium text-gray-900">{image.comic}</h3>
-      <p className="mt-1 text-sm text-gray-900">Episode <span className="font-medium">{image.episode}</span></p>
-      <p className="mt-1 text-sm text-gray-900">Recommended By <span className="font-medium">{image.recommendBy}</span></p>
+      <h3 className="mt-4 text-lg font-medium text-primary-900">{image.comic}</h3>
+      <p className="mt-1 text-sm text-primary-700">Episode <span className="font-medium text-primary-700">{image.episode}</span></p>
+      <p className="mt-1 text-sm text-primary-700">Recommended By <span className="font-medium text-primary-700">{image.recommendBy}</span></p>
     </a>
   )
 }

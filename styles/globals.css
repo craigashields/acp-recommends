@@ -2,3 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    html {
+    --color-from-background: #ffffff;
+    --color-to-background: #ffffff;
+    --color-primary-900: #111827; /* tailwind text-gray-900*/
+    --color-primary-700: #374151; /* tailwind text-gray-700*/
+    --color-primary-500: #6b7280; /* tailwind text-gray-500*/
+    --color-secondary: #3b82f6; /* tailwind text-gray-500*/
+    --color-buttons: #000000;
+    --color-button-hover: #3b82f6;
+    --color-button-text: #ffffff;
+    }
+  }
+
+  @import "themes/halloween.css";

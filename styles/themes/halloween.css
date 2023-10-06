@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Eater&family=M+PLUS+Rounded+1c:wght@700&display=swap');
+
+html[data-theme="halloween"] {
+    --color-from-background: #000000;
+    --color-to-background: #f97316;
+    --color-primary-900: #f97316; /* tailwind text-purple-900*/
+    --color-primary-700: #ffffff; /* tailwind text-purple-700*/
+    --color-primary-500: #ffffff; /* tailwind text-purple-500*/
+    --color-secondary: #22c55e; /* tailwind text-purple-500*/
+    --color-buttons: #000000;
+    --color-button-hover: #22c55e;
+    --color-button-text: #ffffff;
+    --font-family: 'Eater';
+    }

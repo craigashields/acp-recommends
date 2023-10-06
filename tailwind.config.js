@@ -24,6 +24,23 @@ module.exports = {
       13: '3.25rem',
       14: '3.5rem',
     },
+    colors: {
+      transparent: 'transparent',
+      primary: {
+        900: 'var(--color-primary-900)',
+        700: 'var(--color-primary-700)',
+        500: 'var(--color-primary-500)'
+      } ,
+      secondary: 'var(--color-secondary)',
+      buttons: 'var(--color-buttons)',
+      buttonhover: 'var(--color-button-hover)',
+      buttontext: 'var(--color-button-text)',
+      backgroundcolor: 'var(--color-from-background)',
+      backgroundtocolor: 'var(--color-to-background)',
+    },
+    fontFamily: {
+      'heading': ['var(--font-family)'],
+    },
   },
   },
   plugins: [require('@tailwindcss/aspect-ratio'), require('@tailwindcss/typography')],

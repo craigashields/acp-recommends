@@ -19,7 +19,7 @@ const AuthorLayout: React.FC<Props> = ({ post }) => {
     <PageSEO title={`About - ${name}`} description={`About me - ${name}`} />
       <div className="divide-y divide-gray-200">
         <div className="space-y-2 pt-6 pb-8 md:space-y-5">
-          <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
+          <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-primary-900 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14 font-heading">
             About
           </h1>
         </div>
@@ -32,16 +32,16 @@ const AuthorLayout: React.FC<Props> = ({ post }) => {
               height={192}
               className="h-48 w-48 rounded-full"
             />
-            <h3 className="pt-4 pb-2 text-2xl font-bold leading-8 tracking-tight">{name}</h3>
-            <div className="text-gray-500">{occupation}</div>
+            <h3 className="pt-4 pb-2 text-2xl font-bold leading-8 tracking-tight text-primary-900">{name}</h3>
+            <div className="text-primary-500">{occupation}</div>
             <div className="mb-3 flex space-x-4 pt-6">
               <SocialIcon kind="mail" href={`mailto:${email}`} size={6} />
               <SocialIcon kind="github" href={github} size={6}/>
             </div>
           </div>
           <div className="xl:col-span-2">
-              <article className="prose max-w-none pt-8 pb-8">
-                <ReactMarkdown children={content} remarkPlugins={[Breaks]}/>       
+              <article className="prose max-w-none pt-8 pb-8 text-primary-500 prose-a:text-secondary hover:prose-a:text-primary-900">
+                <ReactMarkdown className="links" children={content} remarkPlugins={[Breaks]}/>       
               </article>
           </div>
         </div>
