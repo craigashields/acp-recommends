@@ -30,7 +30,7 @@ const Header: React.FC = () => {
                 </svg>
             </div>
             {typeof siteMetadata.headerTitle === 'string' ? (
-                <div className="text-primary-900 hidden h-10 text-4xl font-semibold sm:block font-heading">
+                <div className="text-primary-900 hidden h-6 text-4xl font-semibold sm:block font-heading">
                 {siteMetadata.headerTitle}
                 </div>
             ) : (
