@@ -1,0 +1,17 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Mountains+of+Christmas&display=swap');
+
+html[data-theme="winter"] {
+    --color-from-background: #a2cdd8;
+    --color-to-background: #ffffff;
+    --color-primary-900: #B43B2b; 
+    --color-primary-700: #25434b; 
+    --color-primary-500: #ffffff; 
+    --color-secondary: #22c55e; /* tailwind text-purple-500*/
+    --color-buttons: #000000;
+    --color-button-hover: #22c55e;
+    --color-button-text: #ffffff;
+    --font-family: 'Mountains of Christmas';
+    --header-xl-fs: 3rem;
+    --header-height: 4.5rem
+    }

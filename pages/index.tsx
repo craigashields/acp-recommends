@@ -95,9 +95,13 @@ export default function Gallery({ images }: { images: Image[] }) {
         <p className="text-primary-700">Sorry no awesomeness found.</p>
       )}
     </div>
+
     </>
   )
 }
+
+
+
 
 function BlurImage({ image }: { image: Image }) {
   const [isLoading, setLoading] = useState(true)

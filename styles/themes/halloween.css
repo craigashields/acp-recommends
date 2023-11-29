@@ -3,12 +3,14 @@
 html[data-theme="halloween"] {
     --color-from-background: #000000;
     --color-to-background: #f97316;
-    --color-primary-900: #f97316; /* tailwind text-purple-900*/
-    --color-primary-700: #ffffff; /* tailwind text-purple-700*/
-    --color-primary-500: #ffffff; /* tailwind text-purple-500*/
-    --color-secondary: #22c55e; /* tailwind text-purple-500*/
+    --color-primary-900: #f97316; 
+    --color-primary-700: #ffffff; 
+    --color-primary-500: #ffffff; 
+    --color-secondary: #22c55e; 
     --color-buttons: #000000;
     --color-button-hover: #22c55e;
     --color-button-text: #ffffff;
     --font-family: 'Eater';
+    --header-height: 1.5rem;
+    --header-xl-fs: 1.70rem; /* 36px */
     }

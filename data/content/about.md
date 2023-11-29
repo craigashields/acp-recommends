@@ -18,4 +18,4 @@ Thanks
 
 Craig
 
-P.S. At the time of writing this, my current read is [The Grande Odalisque](https://www.fantagraphics.com/collections/crime-mystery/products/the-grande-odalisque), which is awesome!
+P.S. At the time of writing this, my current read is [Paper Girls](https://imagecomics.com/comics/series/paper-girls), which is awesome!

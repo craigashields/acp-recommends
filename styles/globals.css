@@ -2,7 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @layer base {
+  @font-face {
+    font-family: "tiza";
+    src: url('/static/fonts/tiza.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
     html {
     --color-from-background: #ffffff;
     --color-to-background: #ffffff;
@@ -13,7 +21,13 @@
     --color-buttons: #000000;
     --color-button-hover: #3b82f6;
     --color-button-text: #ffffff;
+    --font-family: 'tiza';
+    --header-xl-fs: 1.65rem; /* 36px */
+    --header-height: 2.6rem
     }
-  }
 
+  }
+  
+ 
   @import "themes/halloween.css";
+  @import "themes/winter.css";

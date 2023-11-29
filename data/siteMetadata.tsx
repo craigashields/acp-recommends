@@ -42,8 +42,12 @@ const siteMetadata: SiteMetadata
       notFoundHeader: "Sorry I have no idea what that is.",
       notFoundMessage: "Why not go back to our homepage for awesome comic recommends.",
       notFoundButtonText: "Back to Awesomeness"
-  },
-
+    },
+    winter: {
+      notFoundHeader: "Ho ho holy nutcrackers",
+      notFoundMessage: "Our mischievous elves couldn't locate the page you were searching for. No worries, just follow the candy cane trail back to the homepage and stay off Santa's naughty list!",
+      notFoundButtonText: "Sleigh Ride Back Home"
+    }
 }
 
   };

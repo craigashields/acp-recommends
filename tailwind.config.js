@@ -18,6 +18,9 @@ module.exports = {
       spacing: {
       '9/16': '56.25%',
     },
+    height: {
+      'header': 'var(--header-height)'
+    },
     lineHeight: {
       11: '2.75rem',
       12: '3rem',
@@ -39,8 +42,11 @@ module.exports = {
       backgroundtocolor: 'var(--color-to-background)',
     },
     fontFamily: {
-      'heading': ['var(--font-family)'],
+      'heading': ["var(--font-family)", "tiza"]
     },
+    fontSize: {
+      '4xl': 'var(--header-xl-fs)',
+    }
   },
   },
   plugins: [require('@tailwindcss/aspect-ratio'), require('@tailwindcss/typography')],

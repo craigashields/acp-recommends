@@ -33,14 +33,14 @@ const AuthorLayout: React.FC<Props> = ({ post }) => {
               className="h-48 w-48 rounded-full"
             />
             <h3 className="pt-4 pb-2 text-2xl font-bold leading-8 tracking-tight text-primary-900">{name}</h3>
-            <div className="text-primary-500">{occupation}</div>
+            <div className="text-primary-700">{occupation}</div>
             <div className="mb-3 flex space-x-4 pt-6">
-              <SocialIcon kind="mail" href={`mailto:${email}`} size={6} />
-              <SocialIcon kind="github" href={github} size={6}/>
+              <SocialIcon kind="mail" href={`mailto:${email}`} size={8} />
+              <SocialIcon kind="github" href={github} size={8}/>
             </div>
           </div>
           <div className="xl:col-span-2">
-              <article className="prose max-w-none pt-8 pb-8 text-primary-500 prose-a:text-secondary hover:prose-a:text-primary-900">
+              <article className="prose max-w-none pt-8 pb-8 text-primary-700 prose-a:text-secondary hover:prose-a:text-primary-900">
                 <ReactMarkdown className="links" children={content} remarkPlugins={[Breaks]}/>       
               </article>
           </div>

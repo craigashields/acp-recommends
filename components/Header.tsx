@@ -30,7 +30,7 @@ const Header: React.FC = () => {
                 </svg>
             </div>
             {typeof siteMetadata.headerTitle === 'string' ? (
-                <div className="text-primary-900 hidden h-6 text-4xl font-semibold sm:block font-heading">
+                <div className="text-primary-900 hidden h-header text-4xl font-semibold sm:block font-heading">
                 {siteMetadata.headerTitle}
                 </div>
             ) : (
@@ -41,7 +41,7 @@ const Header: React.FC = () => {
         </Link>
         </div>
         <div className="flex items-center text-base leading-5">
-        <div className="text-primary-500 hidden sm:block">
+        <div className="text-primary-700 hidden sm:block">
             {headerNavLinks.map((link) => (
             <Link 
                 key={link.title}

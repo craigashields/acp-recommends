@@ -7,7 +7,6 @@ const MobileNav: React.FC = () => {
   const [navShow, setNavShow] = useState(false);
 
   let theme = getTheme();
-
   const onToggleNav = () => {
     setNavShow((status) => {
       if (status) {

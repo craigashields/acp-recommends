@@ -8,8 +8,9 @@ import { getTheme } from '@/lib/theme';
 
 export default function FourZeroFour(): ReactElement {
 
-  const theme = getTheme()
+  let theme = getTheme()
   const messaging = siteMetadata.seasonalText;
+
 
   return (
     <>
