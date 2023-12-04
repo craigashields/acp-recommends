@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Eater&family=Mountains+of+Christmas&display=swap');
-
 @layer base {
   @font-face {
     font-family: "tiza";
