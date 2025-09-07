@@ -10,16 +10,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { uploadContent } from "@/actions/upload";
+import { uploadContent, type UploadState } from "@/actions/upload";
 import ImageUploadButton from "./image-upload-button";
 import { useFormState } from "react-dom";
 import { ZodErrors } from "../zodErrors";
 import React from "react";
 
-const INITIAL_STATE = {
+const INITIAL_STATE: UploadState = {
   data: null,
   zodErrors: null,
   message: null,
+  error: null,
 };
 export default function ImageUpload() {
   const [formState, formAction] = useFormState(uploadContent, INITIAL_STATE);

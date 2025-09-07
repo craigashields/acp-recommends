@@ -1,16 +1,20 @@
 "use server";
 
 import { v2 as cloudinary } from "cloudinary";
-import { z } from "zod";
 import comicSchema from "@/zodSchemas/comics";
 import { revalidateTag } from "next/cache";
 import { supabaseAdmin as supabase } from "@/lib/supabase-server";
 
-const uploadSchema = comicSchema;
+export type UploadState = {
+  data: "success" | null;
+  zodErrors: Record<string, string[]> | null;
+  message: string | null;
+  error: string | null;
+};
 
 interface CloudinaryUploadResult {
   public_id: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 // Configure Cloudinary
@@ -22,7 +26,10 @@ cloudinary.config({
 
 // Supabase admin client is configured in src/lib/supabase-server.ts
 
-export async function uploadContent(prevState: any, formData: FormData) {
+export async function uploadContent(
+  prevState: UploadState,
+  formData: FormData
+): Promise<UploadState> {
   //Get form data
 
   const validatedFields = comicSchema.safeParse({
@@ -35,9 +42,10 @@ export async function uploadContent(prevState: any, formData: FormData) {
 
   if (!validatedFields.success) {
     return {
-      ...prevState,
+      data: null,
       zodErrors: validatedFields.error.flatten().fieldErrors,
       message: "Validation failures, could not upload",
+      error: null,
     };
   }
 
@@ -88,11 +96,18 @@ export async function uploadContent(prevState: any, formData: FormData) {
     // Invalidate cached comics so new data appears immediately
     revalidateTag("comics");
     return {
-      ...prevState,
       data: "success",
+      zodErrors: null,
+      message: null,
+      error: null,
     };
   } catch (error) {
     console.error("Upload error:", error);
-    return { error: "Failed to upload content" };
+    return {
+      data: null,
+      zodErrors: null,
+      message: null,
+      error: "Failed to upload content",
+    };
   }
 }

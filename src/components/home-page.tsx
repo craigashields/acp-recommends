@@ -19,8 +19,8 @@ export default function HomePage({
   searchParams: SearchParams;
 }) {
   const [displayedComics, setDisplayedComics] = useState<Comic[]>([]); // Comics to display
-  const [page, setPage] = useState(1);
-  const [hasNextPage, setHasNextPage] = useState(true);
+  const [page] = useState(1);
+  const [, setHasNextPage] = useState(true);
 
   const search = searchParams.search?.toLowerCase();
   const episodeFilter = searchParams.episode;

@@ -1,5 +1,7 @@
-export function ZodErrors({ error }: { error: string[] }) {
-  if (!error) return null;
+type ZodErrorsProps = { error?: string[] | null };
+
+export function ZodErrors({ error }: ZodErrorsProps) {
+  if (!error || error.length === 0) return null;
   return (
     <>
       {error.map((err: string, index: number) => (
