@@ -24,7 +24,7 @@ interface FiltersProps {
 export function Filters({ episodes, recommenders }: FiltersProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [isPending, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
 
   const currentEpisode = searchParams.get("episode");
   const currentRecommender = searchParams.get("recommender");

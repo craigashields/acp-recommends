@@ -14,7 +14,6 @@
 import { ComicCard } from "@/components/comic-card";
 import { Filters } from "@/components/filters";
 import { Comic } from "@/types/database";
-import { Search } from "@/components/search";
 import { InfiniteScroll } from "@/components/infinite-scroll";
 import { BackToTop } from "@/components/back-to-top";
 import { AnimatePresence } from "framer-motion";

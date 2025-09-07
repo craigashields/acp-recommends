@@ -3,8 +3,6 @@
 import { ComicCard } from "@/components/comic-card";
 import { Filters } from "@/components/filters";
 import { Comic } from "@/types/database";
-import { Search } from "@/components/search";
-import { InfiniteScroll } from "@/components/infinite-scroll";
 import { BackToTop } from "@/components/back-to-top";
 import { AnimatePresence } from "framer-motion";
 import { AnimatedCard } from "@/components/animation-card";
@@ -73,13 +71,7 @@ export default function HomePage({
     } else {
       setHasNextPage(true);
     }
-  }, [hasNextPage, filteredComics]);
-
-  const handleLoadMore = () => {
-    if (hasNextPage) {
-      setPage((prev) => prev + 1);
-    }
-  };
+  }, [page, filteredComics]);
 
   return (
     <>
@@ -101,14 +93,7 @@ export default function HomePage({
           <div className="mt-12 text-center text-muted-foreground">
             No awesome comics found. Try different filters or search terms.
           </div>
-        ) : (
-          <div className="mt-8">
-            {/* <InfiniteScroll
-              hasNextPage={hasNextPage}
-              onLoadMore={handleLoadMore}
-            /> */}
-          </div>
-        )}
+        ) : null}
         <BackToTop />
       </div>
     </>
