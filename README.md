@@ -1,36 +1,157 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
 
-## Getting Started
+![acp-banner](/public/static/images/logo_banner.jpeg)
 
-First, run the development server:
+  <h1>Awesome Comics Podcast Recommendations</h1>
+  
+  <p>
+    An awesome image gallery of the comics recommended by the Awesome Comics Podcast team  
+  </p>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+<!-- Badges -->
+<p>
+<a href="https://github.com/craigashields/acp-recommends/graphs/contributors">
+    <img src="https://img.shields.io/github/contributors/craigashields/acp-recommends" alt="contributors" />
+</a>
+<a href="">
+    <img src="https://img.shields.io/github/last-commit/craigashields/acp-recommends" alt="last update" />
+</a>
+<a href="https://github.com/craigashields/acp-recommends/network/members">
+    <img src="https://img.shields.io/github/forks/craigashields/acp-recommends" alt="forks" />
+</a>
+<a href="https://github.com/craigashields/acp-recommends/stargazers">
+    <img src="https://img.shields.io/github/stars/craigashields/acp-recommends" alt="stars" />
+</a>
+<a href="https://github.com/craigashields/acp-recommends/issues/">
+    <img src="https://img.shields.io/github/issues/craigashields/acp-recommends" alt="open issues" />
+</a>
+</p>  
+<h4>
+    <a href="https://github.com/craigashields/acp-recommends/">View Demo</a>
+  <span> · </span>
+    <a href="https://github.com/craigashields/acp-recommends">Documentation</a>
+  <span> · </span>
+    <a href="https://github.com/craigashields/acp-recommends/issues/">Report Bug</a>
+  <span> · </span>
+    <a href="https://github.com/craigashields/acp-recommends/issues/">Request Feature</a>
+  </h4>
+</div>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Table of Contents
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- [About ACP Recommends](#about-acp-recommends)
+  - [Screenshots](#screenshots)
+  - [Tech Stack](#tech-stack)
+- [Description](#description)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+- [Acknowledgements](#acknowledgements)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## About ACP Recommends
 
-## Learn More
+Welcome to my corner of the internet! I'm Craig, a passionate comic book fan and the creator of this website dedicated to the Awesome Comics Podcast Recommends.As an ardent lover of comics, I wanted to contribute to the vibrant ACP community. That's why I decided to establish this website, where I can share my enthusiasm for the Awesome Comics Podcast.
 
-To learn more about Next.js, take a look at the following resources:
+It's important to note that this website is purely a fan endeavor, and there is absolutely no profit gained from its operation. The purpose of this platform is to connect fellow ACP lovers with outstanding comics that the team recommend. You won't find any affiliate links here. Any links included are solely intended to help you discover and explore the vast world of comics. This website is driven by a genuine love for the art form and a desire to contribute positively to the comic book community.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+So, join me on this exciting journey, where we celebrate the captivating narratives, vibrant artwork, and extraordinary creators that make the world of comics so fantastic. Remember, it's all about staying awesome!
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+I hope you all find this helpful.
 
-## Deploy on Vercel
+### Screenshots
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+![acp-screenshot](/public/static/images/acp-recommends-demo.jpg)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Tech Stack
+
+- [Supabase](https://supabase.com)
+- [Tailwind CSS](https://tailwindcss.com)
+- [Next.js](https://nextjs.org)
+- [Vercel](https://vercel.com)
+
+## Installation
+
+To install and set up the project, follow these steps:
+
+1. Clone the repository:
+
+   ```
+   git clone [repository url]
+   ```
+
+2. Navigate to the project directory: cd [project directory]
+3. Install dependencies:
+
+   ```
+   npm install
+   ```
+
+## Usage
+
+Once the project is installed and set up, you can use it as follows:
+
+1. Create `.env.local` in project directory.
+2. Add the following to the environment file
+
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=
+   SUPABASE_SERVICE_ROLE_KEY=
+   ```
+
+3. This project uses Supabase as a database for the image cards. In order to populate the above, you'll need a Supabase account and project. You'll be able to retrieve these values once this has been setup.
+
+4. The `index.tsx` page queries a Supabase table. To setup the table in the same way as this project. Go to the Supabase SQL Editor and run the following:
+
+   ```sql
+   create table acp_recommends (
+       id bigint generated by default as identity primary key,
+       created_at timestamp with time zone default timezone('utc'::text, now()) not null,
+       comic text null,
+       href text null,
+       recommendBy text null,
+       imageSrc text null,
+       episode bigint null
+   );
+   ```
+
+5. The project loads images and uses the `next/image` component. This component requires the image domain to be whitelisting in the `next.config.js` file. If it is not whitelisted, you will receive errors.
+
+6. Once you are all setup run:
+
+   ```
+   npm run dev
+   ```
+
+   Open [http://localhost:3000](http://localhost:3000/) in your browser to see the results.
+
+You'll be able to add new images to Supabase and your local version will automatically pickup the new records. However, once deployed, any new records added will not be shown. This is because it is using `getStaticProps`. In order to re-index the page once a new record has been added, you'll need to use Supabase database webhooks. Config like so:
+
+1. Go to Database in Supabase
+2. Select Webhooks - Create New Webhook
+3. Setup a new HTTP Request webhook based on all changes to the Supabase table that was created above. As a HTTP Parameter, create one called `secret`. Generate an API key or add a password of your choice. The URL for the webhook should be `[Domain]/api/revalidate`. Checkout the `api/revalidate.ts` to see what it does.
+4. In your hosting platform, in this case, I use Vercel, add an environment variable called `REVALIDATE_SECRET` and add the same API key value.
+
+Supabase will trigger a website to this API everytime a change is made and the page will re-index and show your changes.
+
+## Contributing
+
+To contribute to the project, please follow these guidelines:
+
+1. Fork the repository: Click the "Fork" button on the top right corner of the repository page.
+2. Create a new branch: git checkout -b [new branch name]
+3. Make your changes and commit them: git commit -m "your commit message"
+4. Push to the branch: git push origin [new branch name]
+5. Submit a pull request: Click the "New pull request" button on the repository page and follow the instructions.
+
+## License
+
+[MIT](https://github.com/craigashields/acp-recommendations/blob/master/LICENSE) © [Craig Shields](https://github.com/craigashields)
+
+## Acknowledgements
+
+I'd like to thank the following
+
+- [timlrx](https://github.com/timlrx) from the awesome tailwind starter blog, from which I learnt alot
+- [leerob](https://github.com/leerob) for the inspiring to do this after watching his [YouTube](https://www.youtube.com/watch?v=BSoRXk1FIw8&t=684s) video from which this repo was originally cloned.
