@@ -6,14 +6,14 @@ import AcpSVG from "@/components/icons/acp";
 const Header: React.FC = () => {
   return (
     <header className="flex items-center justify-between py-10">
-      <div>
+      <div className="w-full">
         <Link
           href="/"
           aria-label={siteMetadata.headerTitle}
           rel="noopener noreferrer"
         >
-          <div className="flex items-center justify-between">
-            <div className="mr-3">
+          <div className="flex items-center justify-center sm:justify-start">
+            <div className="sm:mr-3">
               <AcpSVG />
             </div>
             {typeof siteMetadata.headerTitle === "string" ? (

@@ -4,6 +4,8 @@ import { Input } from "@/components/ui/input";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 
+import { SearchIcon } from "lucide-react";
+
 export function Search() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -42,10 +44,12 @@ export function Search() {
 
   return (
     <div className="relative">
+      <SearchIcon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+
       <Input
         type="search"
         placeholder="Search comics..."
-        className="w-full md:w-[300px]"
+        className="pl-10 w-full md:w-[500px]"
         value={term}
         onChange={(e) => setTerm(e.target.value)}
       />

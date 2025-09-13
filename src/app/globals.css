@@ -81,4 +81,9 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* Make native search clear button show pointer cursor (Chrome/Safari/Edge) */
+  input[type="search"]::-webkit-search-cancel-button {
+    cursor: pointer;
+  }
 }
