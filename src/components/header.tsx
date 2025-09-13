@@ -12,17 +12,13 @@ const Header: React.FC = () => {
           aria-label={siteMetadata.headerTitle}
           rel="noopener noreferrer"
         >
-          <div className="flex items-center justify-center sm:justify-start">
+          <div className="flex flex-col items-center justify-center sm:flex-row sm:justify-start sm:items-center">
             <div className="sm:mr-3">
               <AcpSVG />
             </div>
-            {typeof siteMetadata.headerTitle === "string" ? (
-              <div className="text-primary-900 hidden h-header text-4xl font-semibold sm:block font-heading">
-                {siteMetadata.headerTitle}
-              </div>
-            ) : (
-              siteMetadata.headerTitle
-            )}
+            <div className="text-primary-900 mt-2 text-center h-header text-lg sm:text-2xl md:text-3xl  leading-tight break-words px-4 font-semibold font-heading">
+              {siteMetadata.headerTitle}
+            </div>
           </div>
         </Link>
       </div>

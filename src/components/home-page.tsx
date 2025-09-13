@@ -30,9 +30,7 @@ export default function HomePage({
   const episodes = Array.from(new Set(comics.map((c) => c.episode))).sort(
     (a, b) => b - a
   );
-  const recommenders = Array.from(
-    new Set(comics.map((c) => c.recommended_by))
-  );
+  const recommenders = Array.from(new Set(comics.map((c) => c.recommended_by)));
 
   let filteredComics = comics;
 
@@ -77,7 +75,7 @@ export default function HomePage({
     <>
       <Filters episodes={episodes} recommenders={recommenders} />
 
-      <div className="min-h-screen bg-background container py-8">
+      <div className="min-h-screen bg-background py-8">
         <main className="">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             <AnimatePresence>

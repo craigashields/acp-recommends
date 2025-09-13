@@ -49,7 +49,7 @@ export function Search() {
       <Input
         type="search"
         placeholder="Search comics..."
-        className="pl-10 w-full md:w-[500px]"
+        className="pl-10 w-full "
         value={term}
         onChange={(e) => setTerm(e.target.value)}
       />

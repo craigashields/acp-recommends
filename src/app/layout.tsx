@@ -3,22 +3,16 @@ import "./globals.css";
 import Header from "@/components/header";
 import siteMetadata from "@/data/site-data";
 import Footer from "@/components/footer";
+import ClientLogger from "@/components/client-logger";
 
 export const metadata: Metadata = {
   title: siteMetadata.title,
   description: siteMetadata.description,
   metadataBase: new URL(siteMetadata.siteUrl),
   icons: {
-    icon: [
-      { url: "/favicon.ico" },
-      { url: siteMetadata.siteLogo },
-    ],
-    shortcut: [
-      { url: "/favicon.ico" },
-    ],
-    apple: [
-      { url: siteMetadata.siteLogo },
-    ],
+    icon: [{ url: "/favicon.ico" }, { url: siteMetadata.siteLogo }],
+    shortcut: [{ url: "/favicon.ico" }],
+    apple: [{ url: siteMetadata.siteLogo }],
   },
   openGraph: {
     title: siteMetadata.title,
@@ -49,6 +43,7 @@ export default function RootLayout({
   return (
     <html lang={siteMetadata.language}>
       <body className={`antialiased `}>
+        <ClientLogger />
         <div className="mx-auto max-w-3xl px-4 sm:px-6 xl:max-w-5xl xl:px-0">
           <Header />
           <main className="mb-auto">{children}</main>
