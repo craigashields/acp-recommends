@@ -1,0 +1,59 @@
+"use client";
+
+import { useState } from "react";
+import { Heart } from "lucide-react";
+import { useUser, useClerk } from "@clerk/nextjs";
+import { addToWishlist, removeFromWishlist } from "@/actions/wishlist";
+
+interface WishlistButtonProps {
+  comicId: number;
+  isWishlisted: boolean;
+}
+
+export function WishlistButton({ comicId, isWishlisted }: WishlistButtonProps) {
+  const [wishlisted, setWishlisted] = useState(isWishlisted);
+  const [loading, setLoading] = useState(false);
+  const { isSignedIn } = useUser();
+  const { openSignIn } = useClerk();
+
+  async function handleClick(e: React.MouseEvent) {
+    e.preventDefault(); // prevent the ComicCard link from triggering
+    e.stopPropagation();
+
+    if (!isSignedIn) {
+      openSignIn();
+      return;
+    }
+
+    const next = !wishlisted;
+    setWishlisted(next); // optimistic update
+    setLoading(true);
+
+    try {
+      if (next) {
+        await addToWishlist(comicId);
+      } else {
+        await removeFromWishlist(comicId);
+      }
+    } catch {
+      setWishlisted(!next); // revert on error
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <button
+      onClick={handleClick}
+      disabled={loading}
+      aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
+      className="absolute top-2 right-2 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-black/50 text-white transition-colors hover:bg-black/70 disabled:opacity-50"
+    >
+      <Heart
+        className={`h-4 w-4 transition-colors ${
+          wishlisted ? "fill-rose-500 text-rose-500" : "fill-none"
+        }`}
+      />
+    </button>
+  );
+}

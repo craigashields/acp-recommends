@@ -7,8 +7,9 @@ export type ComicsQuery = {
   search?: string;
   episode?: string;
   recommender?: string;
-  limit: number; // number of items to return
-  offset: number; // starting from
+  limit: number;
+  offset: number;
+  comicIds?: number[]; // when set, restricts results to these IDs (bypasses cache)
 };
 
 type ComicsResult = {
@@ -16,7 +17,58 @@ type ComicsResult = {
   total: number;
 };
 
+async function fetchComics(params: ComicsQuery): Promise<ComicsResult> {
+  const { search, episode, recommender, limit, offset, comicIds } = params;
+
+  // If filtering by IDs and list is empty, return early (nothing to show)
+  if (comicIds !== undefined && comicIds.length === 0) {
+    return { items: [], total: 0 };
+  }
+
+  let query = supabase
+    .from("acp_recommendsv2")
+    .select("*", { count: "exact" })
+    .order("episode", { ascending: false })
+    .order("id", { ascending: true });
+
+  if (comicIds !== undefined) {
+    query = query.in("id", comicIds);
+  }
+
+  if (episode) {
+    const epNum = Number(episode);
+    if (!Number.isNaN(epNum)) {
+      query = query.eq("episode", epNum);
+    }
+  }
+
+  if (recommender) {
+    query = query.ilike("recommended_by", recommender);
+  }
+
+  if (search) {
+    const term = `%${search}%`;
+    query = query.or(`title.ilike.${term},recommended_by.ilike.${term}`);
+  }
+
+  query = query.range(offset, Math.max(offset, offset + limit - 1));
+
+  const { data, error, count } = await query;
+
+  if (error) {
+    console.error("Error fetching comics:", error);
+    return { items: [], total: 0 };
+  }
+
+  return { items: (data as Comic[]) ?? [], total: count ?? 0 };
+}
+
 export async function getComics(params: ComicsQuery): Promise<ComicsResult> {
+  // User-specific wishlist filters must not be cached
+  if (params.comicIds !== undefined) {
+    return fetchComics(params);
+  }
+
   const key = [
     "getComics",
     params.search ?? "",
@@ -26,55 +78,13 @@ export async function getComics(params: ComicsQuery): Promise<ComicsResult> {
     String(params.offset),
   ];
 
-  const fetcher = unstable_cache(
-    async () => {
-      let query = supabase
-        .from("acp_recommendsv2")
-        .select("*", { count: "exact" })
-        .order("episode", { ascending: false })
-        .order("id", { ascending: true });
-
-      const { search, episode, recommender, limit, offset } = params;
-
-      if (episode) {
-        const epNum = Number(episode);
-        if (!Number.isNaN(epNum)) {
-          query = query.eq("episode", epNum);
-        }
-      }
-
-      if (recommender) {
-        // Case-insensitive match for exact recommender
-        query = query.ilike("recommended_by", recommender);
-      }
-
-      if (search) {
-        const term = `%${search}%`;
-        query = query.or(
-          `title.ilike.${term},recommended_by.ilike.${term}`
-        );
-      }
-
-      // Use range for pagination
-      query = query.range(offset, Math.max(offset, offset + limit - 1));
-
-      const { data, error, count } = await query;
-
-      if (error) {
-        console.error("Error fetching comics:", error);
-        return { items: [], total: 0 } as ComicsResult;
-      }
-
-      return { items: (data as Comic[]) ?? [], total: count ?? 0 };
-    },
-    key,
-    { tags: ["comics"] }
-  );
+  const fetcher = unstable_cache(() => fetchComics(params), key, {
+    tags: ["comics"],
+  });
 
   return fetcher();
 }
 
-// Fetch filter options (episodes and recommenders), cached and tagged
 export async function getFilterOptions(): Promise<{
   episodes: number[];
   recommenders: string[];

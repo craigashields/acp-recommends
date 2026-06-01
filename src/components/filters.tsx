@@ -1,10 +1,12 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useTransition } from "react";
+import { useUser, useClerk } from "@clerk/nextjs";
 import { Search } from "@/components/search";
+import { Heart } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
-//
 import {
   Select,
   SelectContent,
@@ -19,17 +21,25 @@ import {
 interface FiltersProps {
   episodes: number[];
   recommenders: string[];
+  showWishlistToggle?: boolean;
 }
 
-export function Filters({ episodes, recommenders }: FiltersProps) {
+export function Filters({
+  episodes,
+  recommenders,
+  showWishlistToggle = false,
+}: FiltersProps) {
   const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const [, startTransition] = useTransition();
+  const { isSignedIn } = useUser();
+  const { openSignIn } = useClerk();
 
   const currentEpisode = searchParams.get("episode");
   const currentRecommender = searchParams.get("recommender");
+  const wishlistActive = searchParams.get("wishlistOnly") === "true";
 
-  // Ensure hosts appear first in recommender dropdown, guests alphabetical
   const hosts = ["Dan", "Tony", "Vince"];
   const hostsLower = hosts.map((h) => h.toLowerCase());
   const presentHosts = hosts
@@ -46,18 +56,36 @@ export function Filters({ episodes, recommenders }: FiltersProps) {
 
   function updateFilter(type: "episode" | "recommender", value: string | null) {
     const params = new URLSearchParams(searchParams);
-
-    // Reset page when filters change
     params.delete("page");
 
-    if (value && value != "all") {
+    if (value && value !== "all") {
       params.set(type, value);
     } else {
       params.delete(type);
     }
 
     startTransition(() => {
-      router.push(`/?${params.toString()}`);
+      router.push(`${pathname}?${params.toString()}`);
+    });
+  }
+
+  function toggleWishlist() {
+    if (!isSignedIn) {
+      openSignIn();
+      return;
+    }
+
+    const params = new URLSearchParams(searchParams);
+    params.delete("page");
+
+    if (wishlistActive) {
+      params.delete("wishlistOnly");
+    } else {
+      params.set("wishlistOnly", "true");
+    }
+
+    startTransition(() => {
+      router.push(`${pathname}?${params.toString()}`);
     });
   }
 
@@ -125,6 +153,16 @@ export function Filters({ episodes, recommenders }: FiltersProps) {
           </SelectContent>
         </Select>
       </div>
+      {showWishlistToggle && (
+        <Button
+          variant={wishlistActive ? "default" : "outline"}
+          onClick={toggleWishlist}
+          className="w-full md:w-auto gap-2"
+        >
+          <Heart className={`h-4 w-4 ${wishlistActive ? "fill-current" : ""}`} />
+          My Wishlist
+        </Button>
+      )}
     </div>
   );
 }

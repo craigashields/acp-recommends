@@ -1,16 +1,4 @@
-// import HomePage from "../components/home-page";
-// import { getComics } from "@/actions/getComics";
-// import { SearchParams } from "@/types/general";
-
-// export default async function Page({
-//   searchParams,
-// }: {
-//   searchParams: SearchParams;
-// }) {
-//   const comics = await getComics(); // Fetch data on the server
-//   return <HomePage comics={comics} searchParams={searchParams} />;
-// }
-
+import { auth } from "@clerk/nextjs/server";
 import { ComicCard } from "@/components/comic-card";
 import { Filters } from "@/components/filters";
 import { Comic } from "@/types/database";
@@ -19,6 +7,7 @@ import { BackToTop } from "@/components/back-to-top";
 import { AnimatePresence } from "framer-motion";
 import { AnimatedCard } from "@/components/animation-card";
 import { getComics, getFilterOptions } from "@/actions/getComics";
+import { getMyWishlistComicIds } from "@/actions/wishlist";
 
 const ITEMS_PER_PAGE = 12;
 
@@ -30,31 +19,45 @@ export default async function Home({
     page?: string;
     episode?: string;
     recommender?: string;
+    wishlistOnly?: string;
   };
 }) {
+  const { userId } = await auth();
+
   const search = searchParams.search?.toLowerCase();
   const currentPage = Number(searchParams.page) || 1;
   const episodeFilter = searchParams.episode;
   const recommenderFilter = searchParams.recommender;
+  const wishlistOnly = searchParams.wishlistOnly === "true" && !!userId;
 
   const itemsToShow = currentPage * ITEMS_PER_PAGE;
+
+  // Always fetch wishlist IDs for signed-in users:
+  // used for (a) filtering when wishlistOnly=true and (b) heart icon state on every card
+  const wishlistComicIds = userId ? await getMyWishlistComicIds() : undefined;
+  const comicIds = wishlistOnly ? wishlistComicIds : undefined;
 
   const [{ items: paginatedComics, total }, filterOptions] = await Promise.all([
     getComics({
       search,
       episode: episodeFilter,
       recommender: recommenderFilter,
-      limit: itemsToShow,
+      limit: wishlistOnly ? 200 : itemsToShow,
       offset: 0,
+      comicIds,
     }),
     getFilterOptions(),
   ]);
 
-  const hasNextPage = itemsToShow < total;
+  const hasNextPage = !wishlistOnly && itemsToShow < total;
 
   return (
     <>
-      <Filters episodes={filterOptions.episodes} recommenders={filterOptions.recommenders} />
+      <Filters
+        episodes={filterOptions.episodes}
+        recommenders={filterOptions.recommenders}
+        showWishlistToggle={true}
+      />
 
       <div className="min-h-screen bg-background container py-8">
         <main className="">
@@ -62,7 +65,17 @@ export default async function Home({
             <AnimatePresence>
               {paginatedComics.map((comic: Comic) => (
                 <AnimatedCard key={comic.id}>
-                  <ComicCard comic={comic} />
+                  <ComicCard
+                    comic={comic}
+                    wishlistState={
+                      userId
+                        ? {
+                            isWishlisted:
+                              wishlistComicIds?.includes(comic.id) ?? false,
+                          }
+                        : undefined
+                    }
+                  />
                 </AnimatedCard>
               ))}
             </AnimatePresence>
@@ -70,12 +83,16 @@ export default async function Home({
         </main>
         {total === 0 ? (
           <div className="mt-12 text-center text-muted-foreground">
-            No awesome comics found. Try different filters or search terms.
+            {wishlistOnly
+              ? "No comics on your wishlist yet. Click the heart on any comic to add it."
+              : "No awesome comics found. Try different filters or search terms."}
           </div>
         ) : (
-          <div className="mt-8">
-            <InfiniteScroll hasNextPage={hasNextPage} />
-          </div>
+          hasNextPage && (
+            <div className="mt-8">
+              <InfiniteScroll hasNextPage={hasNextPage} />
+            </div>
+          )
         )}
         <BackToTop />
       </div>
