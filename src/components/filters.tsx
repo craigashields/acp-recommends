@@ -89,12 +89,29 @@ export function Filters({
     });
   }
 
+  // With the wishlist toggle present we need a tablet-specific 2×2 grid:
+  //   Row 1: Search | Wishlist
+  //   Row 2: Episode | Recommender
+  // DOM order is Search → Episode → Recommender → Wishlist, so we use
+  // sm:order-* to rearrange at the tablet breakpoint without touching desktop.
+  const hasToggle = showWishlistToggle;
+
   return (
-    <div className="flex flex-col md:flex-row gap-4 mb-6 items-stretch md:items-center">
-      <div className="w-full md:flex-1">
+    <div
+      className={[
+        "flex flex-col gap-4 mb-6 items-stretch",
+        hasToggle
+          ? "sm:grid sm:grid-cols-2 lg:flex lg:flex-row lg:items-center"
+          : "md:flex-row md:items-center",
+      ].join(" ")}
+    >
+      {/* Search — row 1 col 1 on tablet, flex-1 on desktop */}
+      <div className="w-full lg:flex-1">
         <Search />
       </div>
-      <div className="w-full md:w-48">
+
+      {/* Episode — row 2 col 1 on tablet (order-3), w-48 on desktop (order-2) */}
+      <div className={`w-full lg:w-48 ${hasToggle ? "sm:order-3 lg:order-2" : ""}`}>
         <Select
           onValueChange={(episode) => updateFilter("episode", episode)}
           defaultValue={currentEpisode || "all"}
@@ -112,11 +129,11 @@ export function Filters({
           </SelectContent>
         </Select>
       </div>
-      <div className="w-full md:w-48">
+
+      {/* Recommender — row 2 col 2 on tablet (order-4), w-48 on desktop (order-3) */}
+      <div className={`w-full lg:w-48 ${hasToggle ? "sm:order-4 lg:order-3" : ""}`}>
         <Select
-          onValueChange={(recommender) =>
-            updateFilter("recommender", recommender)
-          }
+          onValueChange={(recommender) => updateFilter("recommender", recommender)}
           defaultValue={currentRecommender || "all"}
         >
           <SelectTrigger>
@@ -153,11 +170,13 @@ export function Filters({
           </SelectContent>
         </Select>
       </div>
+
+      {/* Wishlist toggle — row 1 col 2 on tablet (order-2), last on desktop (order-4) */}
       {showWishlistToggle && (
         <Button
           variant={wishlistActive ? "default" : "outline"}
           onClick={toggleWishlist}
-          className="w-full md:w-auto gap-2"
+          className="w-full lg:w-auto gap-2 sm:order-2 lg:order-4"
         >
           <Heart className={`h-4 w-4 ${wishlistActive ? "fill-current" : ""}`} />
           My Wishlist
