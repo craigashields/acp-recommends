@@ -7,34 +7,26 @@ import { HeaderAuth } from "@/components/header-auth";
 
 const Header: React.FC = () => {
   return (
-    <header className="flex items-center justify-between py-10">
-      <div className="flex-1">
-        <div className="grid grid-cols-1 gap-y-2 sm:gap-y-1 sm:grid-cols-[auto_1fr] sm:grid-rows-[auto_auto] sm:gap-x-4 sm:items-center">
-          <Link
-            href="/"
-            aria-label={siteMetadata.headerTitle}
-            rel="noopener noreferrer"
-            className="justify-self-center sm:justify-self-start sm:col-start-1 sm:row-span-2"
-          >
-            <AcpSVG />
-          </Link>
+    <header className="flex items-center justify-between py-6">
+      {/* Left: Logo + Title */}
+      <Link
+        href="/"
+        aria-label={siteMetadata.headerTitle}
+        className="flex items-center gap-3 min-w-0"
+      >
+        <AcpSVG />
+        <span className="text-lg sm:text-2xl md:text-3xl font-semibold leading-tight truncate">
+          {siteMetadata.headerTitle}
+        </span>
+      </Link>
 
-          <Link
-            href="/"
-            aria-label={siteMetadata.headerTitle}
-            rel="noopener noreferrer"
-          >
-            <div className="text-primary-900 text-center sm:text-left text-lg sm:text-2xl md:text-3xl leading-tight break-words font-semibold font-heading">
-              {siteMetadata.headerTitle}
-            </div>
-          </Link>
-
-          <div className="justify-self-center sm:justify-self-start sm:col-start-2 sm:row-start-2">
-            <SocialLinks />
-          </div>
+      {/* Right: Social icons (desktop only) + Auth */}
+      <div className="flex items-center gap-3 shrink-0 ml-4">
+        <div className="hidden sm:flex items-center">
+          <SocialLinks />
         </div>
+        <HeaderAuth />
       </div>
-      <HeaderAuth />
     </header>
   );
 };
