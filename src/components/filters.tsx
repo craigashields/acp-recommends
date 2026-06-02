@@ -111,7 +111,7 @@ export function Filters({
       </div>
 
       {/* Episode — row 2 col 1 on tablet (order-3), w-48 on desktop (order-2) */}
-      <div className={`w-full lg:w-48 ${hasToggle ? "sm:order-3 lg:order-2" : ""}`}>
+      <div className={`w-full lg:w-48 ${hasToggle ? "sm:order-3 sm:w-48 lg:order-2" : ""}`}>
         <Select
           onValueChange={(episode) => updateFilter("episode", episode)}
           defaultValue={currentEpisode || "all"}
@@ -131,7 +131,7 @@ export function Filters({
       </div>
 
       {/* Recommender — row 2 col 2 on tablet (order-4), w-48 on desktop (order-3) */}
-      <div className={`w-full lg:w-48 ${hasToggle ? "sm:order-4 lg:order-3" : ""}`}>
+      <div className={`w-full lg:w-48 ${hasToggle ? "sm:order-4 sm:w-48 lg:order-3" : ""}`}>
         <Select
           onValueChange={(recommender) => updateFilter("recommender", recommender)}
           defaultValue={currentRecommender || "all"}
