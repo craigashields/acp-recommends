@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Heart } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useUser, useClerk } from "@clerk/nextjs";
@@ -14,6 +14,12 @@ interface WishlistButtonProps {
 export function WishlistButton({ comicId, isWishlisted }: WishlistButtonProps) {
   const [wishlisted, setWishlisted] = useState(isWishlisted);
   const [loading, setLoading] = useState(false);
+
+  // Sync with server state after router.refresh() — if the server action
+  // failed silently, the prop will revert and the heart will refill.
+  useEffect(() => {
+    setWishlisted(isWishlisted);
+  }, [isWishlisted]);
   const { isSignedIn } = useUser();
   const { openSignIn } = useClerk();
   const router = useRouter();
