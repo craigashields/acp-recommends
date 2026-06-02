@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { notFound } from "next/navigation";
 import { getWishlistBySlug } from "@/actions/wishlist";
 import { getComics, getFilterOptions } from "@/actions/getComics";
