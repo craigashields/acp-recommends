@@ -7,9 +7,14 @@ import { HeaderAuth } from "@/components/header-auth";
 
 const Header: React.FC = () => {
   return (
-    <header className="flex items-start justify-between py-10">
-      {/* Left: branding — logo spans both rows on desktop, stacks on mobile */}
-      <div className="flex-1 min-w-0">
+    <header className="relative py-10">
+      {/* Auth: absolute top-right so it never affects the branding layout */}
+      <div className="absolute top-10 right-0">
+        <HeaderAuth />
+      </div>
+
+      {/* Branding: centred on mobile, left-aligned on desktop, unaffected by auth */}
+      <div className="pr-14 sm:pr-16">
         <div className="grid grid-cols-1 gap-y-2 sm:gap-y-1 sm:grid-cols-[auto_1fr] sm:grid-rows-[auto_auto] sm:gap-x-4 sm:items-center">
           <Link
             href="/"
@@ -30,11 +35,6 @@ const Header: React.FC = () => {
             <SocialLinks />
           </div>
         </div>
-      </div>
-
-      {/* Right: auth — top-aligned so it sits level with the title row */}
-      <div className="shrink-0 ml-6 pt-1">
-        <HeaderAuth />
       </div>
     </header>
   );
