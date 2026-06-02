@@ -4,6 +4,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useTransition } from "react";
 import { useUser, useClerk } from "@clerk/nextjs";
 import { Search } from "@/components/search";
+import { ShareButton } from "@/components/share-button";
 import { Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -22,12 +23,14 @@ interface FiltersProps {
   episodes: number[];
   recommenders: string[];
   showWishlistToggle?: boolean;
+  shareUrl?: string; // passed from server when wishlistOnly is active
 }
 
 export function Filters({
   episodes,
   recommenders,
   showWishlistToggle = false,
+  shareUrl,
 }: FiltersProps) {
   const router = useRouter();
   const pathname = usePathname();
@@ -162,6 +165,9 @@ export function Filters({
           <Heart className={`h-4 w-4 ${wishlistActive ? "fill-current" : ""}`} />
           My Wishlist
         </Button>
+      )}
+      {wishlistActive && shareUrl && (
+        <ShareButton shareUrl={shareUrl} />
       )}
     </div>
   );
