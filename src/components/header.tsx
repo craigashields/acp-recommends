@@ -12,10 +12,10 @@ const Header: React.FC = () => {
       <Link
         href="/"
         aria-label={siteMetadata.headerTitle}
-        className="flex items-center gap-3 min-w-0"
+        className="flex flex-col lg:flex-row lg:items-center gap-1 lg:gap-3 min-w-0"
       >
         <AcpSVG />
-        <span className="text-lg sm:text-2xl md:text-3xl font-semibold font-heading leading-tight truncate">
+        <span className="text-lg sm:text-2xl md:text-3xl font-semibold font-heading leading-tight">
           {siteMetadata.headerTitle}
         </span>
       </Link>
