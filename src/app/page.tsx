@@ -7,7 +7,7 @@ import { BackToTop } from "@/components/back-to-top";
 import { AnimatePresence } from "framer-motion";
 import { AnimatedCard } from "@/components/animation-card";
 import { getComics, getFilterOptions } from "@/actions/getComics";
-import { getMyWishlistComicIds, getOrCreateWishlist } from "@/actions/wishlist";
+import { getMyWishlistComicIds } from "@/actions/wishlist";
 
 const ITEMS_PER_PAGE = 12;
 
@@ -32,17 +32,8 @@ export default async function Home({
 
   const itemsToShow = currentPage * ITEMS_PER_PAGE;
 
-  // Run wishlist fetches in parallel: IDs always needed (for heart states),
-  // share slug only needed when wishlist filter is active.
-  const [wishlistComicIds, wishlist] = await Promise.all([
-    userId ? getMyWishlistComicIds() : Promise.resolve(undefined),
-    wishlistOnly ? getOrCreateWishlist() : Promise.resolve(undefined),
-  ]);
-
+  const wishlistComicIds = userId ? await getMyWishlistComicIds() : undefined;
   const comicIds = wishlistOnly ? wishlistComicIds : undefined;
-  const shareUrl = wishlist
-    ? `${process.env.NEXT_PUBLIC_SITE_URL ?? ""}/wishlist/${wishlist.share_slug}`
-    : undefined;
 
   const [{ items: paginatedComics, total }, filterOptions] = await Promise.all([
     getComics({
@@ -64,7 +55,6 @@ export default async function Home({
         episodes={filterOptions.episodes}
         recommenders={filterOptions.recommenders}
         showWishlistToggle={true}
-        shareUrl={shareUrl}
       />
 
       <div className="min-h-screen bg-background container py-8">
