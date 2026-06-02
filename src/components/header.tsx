@@ -15,7 +15,7 @@ const Header: React.FC = () => {
         className="flex items-center gap-3 min-w-0"
       >
         <AcpSVG />
-        <span className="text-lg sm:text-2xl md:text-3xl font-semibold leading-tight truncate">
+        <span className="text-lg sm:text-2xl md:text-3xl font-semibold font-heading leading-tight truncate">
           {siteMetadata.headerTitle}
         </span>
       </Link>
