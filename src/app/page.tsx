@@ -67,14 +67,10 @@ export default async function Home({
                 <AnimatedCard key={comic.id}>
                   <ComicCard
                     comic={comic}
-                    wishlistState={
-                      userId
-                        ? {
-                            isWishlisted:
-                              wishlistComicIds?.includes(comic.id) ?? false,
-                          }
-                        : undefined
-                    }
+                    wishlistState={{
+                      isWishlisted:
+                        wishlistComicIds?.includes(comic.id) ?? false,
+                    }}
                   />
                 </AnimatedCard>
               ))}

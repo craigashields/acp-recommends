@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Heart } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useUser, useClerk } from "@clerk/nextjs";
 import { addToWishlist, removeFromWishlist } from "@/actions/wishlist";
 
@@ -15,9 +16,10 @@ export function WishlistButton({ comicId, isWishlisted }: WishlistButtonProps) {
   const [loading, setLoading] = useState(false);
   const { isSignedIn } = useUser();
   const { openSignIn } = useClerk();
+  const router = useRouter();
 
   async function handleClick(e: React.MouseEvent) {
-    e.preventDefault(); // prevent the ComicCard link from triggering
+    e.preventDefault();
     e.stopPropagation();
 
     if (!isSignedIn) {
@@ -35,6 +37,7 @@ export function WishlistButton({ comicId, isWishlisted }: WishlistButtonProps) {
       } else {
         await removeFromWishlist(comicId);
       }
+      router.refresh(); // re-render server components with fresh wishlist data
     } catch {
       setWishlisted(!next); // revert on error
     } finally {
