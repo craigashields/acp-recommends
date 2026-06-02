@@ -7,24 +7,33 @@ import { HeaderAuth } from "@/components/header-auth";
 
 const Header: React.FC = () => {
   return (
-    <header className="flex items-center justify-between py-6">
-      {/* Left: Logo + Title */}
-      <Link
-        href="/"
-        aria-label={siteMetadata.headerTitle}
-        className="flex flex-col lg:flex-row lg:items-center gap-1 lg:gap-3 min-w-0"
-      >
-        <AcpSVG />
-        <span className="text-lg sm:text-2xl md:text-3xl font-semibold font-heading leading-tight">
-          {siteMetadata.headerTitle}
-        </span>
-      </Link>
+    <header className="flex items-start justify-between py-10">
+      {/* Left: branding — logo spans both rows on desktop, stacks on mobile */}
+      <div className="flex-1 min-w-0">
+        <div className="grid grid-cols-1 gap-y-2 sm:gap-y-1 sm:grid-cols-[auto_1fr] sm:grid-rows-[auto_auto] sm:gap-x-4 sm:items-center">
+          <Link
+            href="/"
+            aria-label={siteMetadata.headerTitle}
+            className="justify-self-center sm:justify-self-start sm:col-start-1 sm:row-span-2"
+          >
+            <AcpSVG />
+          </Link>
 
-      {/* Right: Social icons (desktop only) + Auth */}
-      <div className="flex items-center gap-3 shrink-0 ml-4">
-        <div className="hidden sm:flex items-center">
-          <SocialLinks />
+          <Link href="/" aria-label={siteMetadata.headerTitle}>
+            <div className="text-center sm:text-left text-lg sm:text-2xl md:text-3xl leading-tight break-words font-semibold font-heading">
+              {siteMetadata.headerTitle}
+            </div>
+          </Link>
+
+          {/* Social icons: visible on mobile (centred), left-aligned on desktop */}
+          <div className="justify-self-center sm:justify-self-start sm:col-start-2 sm:row-start-2">
+            <SocialLinks />
+          </div>
         </div>
+      </div>
+
+      {/* Right: auth — top-aligned so it sits level with the title row */}
+      <div className="shrink-0 ml-6 pt-1">
         <HeaderAuth />
       </div>
     </header>
