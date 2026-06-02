@@ -101,7 +101,7 @@ export function Filters({
       className={[
         "flex flex-col gap-4 mb-6 items-stretch",
         hasToggle
-          ? "sm:grid sm:grid-cols-2 lg:flex lg:flex-row lg:items-center"
+          ? "sm:grid sm:grid-cols-[1fr_auto] lg:flex lg:flex-row lg:items-center"
           : "md:flex-row md:items-center",
       ].join(" ")}
     >
