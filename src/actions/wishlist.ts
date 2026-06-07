@@ -111,9 +111,13 @@ export async function getWishlistBySlug(slug: string): Promise<{
 
   const client = await clerkClient();
   const user = await client.users.getUser(wishlist.user_id);
-  const ownerName = user.firstName
-    ? `${user.firstName}${user.lastName ? ` ${user.lastName}` : ""}`
-    : (user.username ?? "Someone");
+  const ownerName =
+    (user.unsafeMetadata?.displayName as string | undefined) ||
+    (user.firstName
+      ? `${user.firstName}${user.lastName ? ` ${user.lastName}` : ""}`
+      : "") ||
+    user.username ||
+    "Someone";
 
   return {
     wishlistComicIds,

@@ -6,6 +6,16 @@ import { useUser, useClerk } from "@clerk/nextjs";
 import { Search } from "@/components/search";
 import { Heart, Share2, Check, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { getOrCreateWishlist } from "@/actions/wishlist";
 
 import {
@@ -34,9 +44,12 @@ export function Filters({
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [, startTransition] = useTransition();
-  const { isSignedIn } = useUser();
+  const { isSignedIn, user } = useUser();
   const { openSignIn } = useClerk();
   const [shareState, setShareState] = useState<"idle" | "loading" | "copied">("idle");
+  const [showNameDialog, setShowNameDialog] = useState(false);
+  const [displayNameInput, setDisplayNameInput] = useState("");
+  const [savingName, setSavingName] = useState(false);
 
   const currentEpisode = searchParams.get("episode");
   const currentRecommender = searchParams.get("recommender");
@@ -91,8 +104,7 @@ export function Filters({
     });
   }
 
-  async function handleShare() {
-    if (shareState !== "idle") return;
+  async function doShare() {
     setShareState("loading");
     try {
       const wishlist = await getOrCreateWishlist();
@@ -102,6 +114,29 @@ export function Filters({
       setTimeout(() => setShareState("idle"), 2000);
     } catch {
       setShareState("idle");
+    }
+  }
+
+  async function handleShare() {
+    if (shareState !== "idle") return;
+    if (!user?.unsafeMetadata?.displayName) {
+      setDisplayNameInput("");
+      setShowNameDialog(true);
+      return;
+    }
+    await doShare();
+  }
+
+  async function handleSaveAndShare() {
+    setSavingName(true);
+    try {
+      if (displayNameInput.trim()) {
+        await user!.update({ unsafeMetadata: { displayName: displayNameInput.trim() } });
+      }
+    } finally {
+      setSavingName(false);
+      setShowNameDialog(false);
+      await doShare();
     }
   }
 
@@ -197,6 +232,35 @@ export function Filters({
           )}
         </div>
       )}
+      <Dialog open={showNameDialog} onOpenChange={setShowNameDialog}>
+        <DialogContent className="sm:max-w-sm">
+          <DialogHeader>
+            <DialogTitle>Name your wishlist</DialogTitle>
+            <DialogDescription>
+              What should we call your wishlist? This is shown to anyone you share it with.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-2 py-2">
+            <Label htmlFor="display-name">Your name</Label>
+            <Input
+              id="display-name"
+              placeholder="e.g. Craig"
+              value={displayNameInput}
+              onChange={(e) => setDisplayNameInput(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleSaveAndShare()}
+              autoFocus
+            />
+          </div>
+          <DialogFooter className="gap-2">
+            <Button variant="ghost" onClick={() => handleSaveAndShare()} disabled={savingName}>
+              Skip
+            </Button>
+            <Button onClick={() => handleSaveAndShare()} disabled={savingName || !displayNameInput.trim()}>
+              {savingName ? <Loader2 className="h-4 w-4 animate-spin" /> : "Save & Copy Link"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
