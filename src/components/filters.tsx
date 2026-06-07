@@ -1,11 +1,12 @@
 "use client";
 
+import { useState, useTransition } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useTransition } from "react";
 import { useUser, useClerk } from "@clerk/nextjs";
 import { Search } from "@/components/search";
-import { Heart } from "lucide-react";
+import { Heart, Share2, Check, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { getOrCreateWishlist } from "@/actions/wishlist";
 
 import {
   Select,
@@ -35,6 +36,7 @@ export function Filters({
   const [, startTransition] = useTransition();
   const { isSignedIn } = useUser();
   const { openSignIn } = useClerk();
+  const [shareState, setShareState] = useState<"idle" | "loading" | "copied">("idle");
 
   const currentEpisode = searchParams.get("episode");
   const currentRecommender = searchParams.get("recommender");
@@ -87,6 +89,20 @@ export function Filters({
     startTransition(() => {
       router.push(`${pathname}?${params.toString()}`);
     });
+  }
+
+  async function handleShare() {
+    if (shareState !== "idle") return;
+    setShareState("loading");
+    try {
+      const wishlist = await getOrCreateWishlist();
+      const url = `${process.env.NEXT_PUBLIC_SITE_URL ?? window.location.origin}/wishlist/${wishlist.share_slug}`;
+      await navigator.clipboard.writeText(url);
+      setShareState("copied");
+      setTimeout(() => setShareState("idle"), 2000);
+    } catch {
+      setShareState("idle");
+    }
   }
 
   return (
@@ -152,14 +168,34 @@ export function Filters({
         </Select>
       </div>
       {showWishlistToggle && (
-        <Button
-          variant={wishlistActive ? "default" : "outline"}
-          onClick={toggleWishlist}
-          className="w-full md:w-auto gap-2"
-        >
-          <Heart className={`h-4 w-4 ${wishlistActive ? "fill-current" : ""}`} />
-          My Wishlist
-        </Button>
+        <div className="flex w-full md:w-auto">
+          <Button
+            variant={wishlistActive ? "default" : "outline"}
+            onClick={toggleWishlist}
+            className={`gap-2 flex-1 md:flex-none ${isSignedIn ? "rounded-r-none border-r-0" : ""}`}
+          >
+            <Heart className={`h-4 w-4 ${wishlistActive ? "fill-current" : ""}`} />
+            My Wishlist
+          </Button>
+          {isSignedIn && (
+            <Button
+              variant={wishlistActive ? "default" : "outline"}
+              size="icon"
+              onClick={handleShare}
+              disabled={shareState === "loading"}
+              aria-label="Copy wishlist share link"
+              className="rounded-l-none shrink-0"
+            >
+              {shareState === "loading" ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : shareState === "copied" ? (
+                <Check className="h-4 w-4 text-green-500" />
+              ) : (
+                <Share2 className="h-4 w-4" />
+              )}
+            </Button>
+          )}
+        </div>
       )}
     </div>
   );
