@@ -15,5 +15,11 @@ export const supabaseAdmin = createClient(url, serviceKey, {
     persistSession: false,
     autoRefreshToken: false,
   },
+  global: {
+    // Opt every Supabase GET request out of Next.js's Data Cache.
+    // We use unstable_cache explicitly where caching is wanted (getComics,
+    // getFilterOptions), so bypassing it here is always safe.
+    fetch: (input, init) => fetch(input, { ...init, cache: "no-store" }),
+  },
 });
 
