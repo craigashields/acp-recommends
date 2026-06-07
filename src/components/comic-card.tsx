@@ -2,14 +2,15 @@ import Link from "next/link";
 import { Calendar } from "lucide-react";
 import type { Comic } from "@/types/database";
 import { CloudinaryImage } from "./cloudinary-image";
-
+import { WishlistButton } from "./wishlist-button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 
 interface ComicCardProps {
   comic: Comic;
+  wishlistState?: { isWishlisted: boolean };
 }
 
-export function ComicCard({ comic }: ComicCardProps) {
+export function ComicCard({ comic, wishlistState }: ComicCardProps) {
   return (
     <Card className="overflow-hidden group">
       <Link href={comic.creatorUrl} target="_blank" rel="noopener noreferrer">
@@ -21,6 +22,12 @@ export function ComicCard({ comic }: ComicCardProps) {
             height={400}
             className="object-cover w-full h-full"
           />
+          {wishlistState !== undefined && (
+            <WishlistButton
+              comicId={comic.id}
+              isWishlisted={wishlistState.isWishlisted}
+            />
+          )}
         </div>
         <CardContent className="p-4">
           <h2 className="font-semibold line-clamp-1">{comic.title}</h2>

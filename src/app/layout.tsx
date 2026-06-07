@@ -4,6 +4,7 @@ import Header from "@/components/header";
 import siteMetadata from "@/data/site-data";
 import Footer from "@/components/footer";
 import ClientLogger from "@/components/client-logger";
+import { ClerkProvider } from "@clerk/nextjs";
 
 export const metadata: Metadata = {
   title: siteMetadata.title,
@@ -19,11 +20,7 @@ export const metadata: Metadata = {
     description: siteMetadata.description,
     url: siteMetadata.siteUrl,
     siteName: siteMetadata.headerTitle || siteMetadata.title,
-    images: [
-      {
-        url: siteMetadata.socialBanner,
-      },
-    ],
+    images: [{ url: siteMetadata.socialBanner }],
     locale: siteMetadata.locale,
     type: "website",
   },
@@ -41,15 +38,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang={siteMetadata.language}>
-      <body className={`antialiased `}>
-        <ClientLogger />
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 xl:max-w-5xl xl:px-0">
-          <Header />
-          <main className="mb-auto">{children}</main>
-          <Footer />
-        </div>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang={siteMetadata.language}>
+        <body className="antialiased">
+          <ClientLogger />
+          <div className="mx-auto max-w-3xl px-4 sm:px-6 xl:max-w-5xl xl:px-0">
+            <Header />
+            <main className="mb-auto">{children}</main>
+            <Footer />
+          </div>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
